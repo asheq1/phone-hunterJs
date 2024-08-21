@@ -10,6 +10,17 @@ const displayPhones = phones =>{
     // clear phone container cards before adding new cards
     container.textContent = '';
 
+    // display show all button if there are more than 12 
+    const showAll = document.getElementById('show-all');
+    if(phones.length > 12){
+        showAll.classList.remove('hidden')
+    }else{
+        showAll.classList.add('hidden')
+    }
+
+    // display only first 10 
+    phones = phones.slice(0, 12);
+
     phones.forEach(phone => {
         console.log(phone)
         const div = document.createElement('div');
@@ -30,11 +41,15 @@ const displayPhones = phones =>{
         `;
         container.appendChild(div)
 
-    })
+    });
+    // hide toggle spinner
+    toggleSpinner(false)
 }
 
 // search handle 
 const searchHandle = ()=>{
+    toggleSpinner(true)
+
     const searchField = document.getElementById('search-field');
     const searchText = searchField.value;
     console.log(searchText)
@@ -43,4 +58,15 @@ const searchHandle = ()=>{
     loadPhone(searchText)
 }
 
-loadPhone()
+// spinner 
+const toggleSpinner = (isLoading) =>{
+    const loadingSpinner = document.getElementById('loading-spinner')
+    if(isLoading){
+        loadingSpinner.classList.remove('hidden')
+    } else{
+        loadingSpinner.classList.add('hidden')
+    }
+
+}
+
+loadPhone('iphone')
