@@ -24,7 +24,7 @@ const displayPhones = (phones, isShowAll) =>{
     }
 
     phones.forEach(phone => {
-        console.log(phone)
+        // console.log(phone)
         const div = document.createElement('div');
         div.classList = `card bg-gray-100 p-4 shadow-xl`
         div.innerHTML = `
@@ -52,9 +52,26 @@ const displayPhones = (phones, isShowAll) =>{
 const showDetails = async(id) =>{
     const res = await fetch(`https://openapi.programming-hero.com/api/phone/${id}`)
     const data =await res.json()
-    console.log(data)
+    const phone = data.data;
+    showPhoneDetails(phone)
 
 }
+const showPhoneDetails = (phone) =>{
+    console.log(phone)    
+    const phoneName = document.getElementById('phone-name');
+    phoneName.innerText = phone.name
+
+    const showContainer = document.getElementById('show-details-container');
+    showContainer.innerHTML = `
+        <img src="${phone.image}" alt=""/>
+        <p><span>Storage:</span>${phone?.mainFeatures?.storage}</p>
+        <p><span>GPS:</span>${phone.pthers?.GPS || 'No GPS available'}</p>
+    `
+
+    // show the modal
+    my_modal_5.showModal()
+}
+
 
 // search handle 
 const searchHandle = (isShowAll)=>{
@@ -85,5 +102,5 @@ const handleShowAll = () =>{
 
 }
 
+loadPhone('iphone', true)
 
-// loadPhone('iphone')
